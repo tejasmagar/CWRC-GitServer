@@ -6,7 +6,7 @@ The CWRC-GitServer is a node.js express server acting as a proxy between [CWRC-G
 
 CWRC-GitServer provides http enpoints for listing, creating, and updating CWRC XML documents, along with RDF annotations of the XML document.
 
-The CWRC-GitServer delegates each of it's call to the GitHub API to an instance of [CWRC-Git](https://github.com/cwrc/CWRC-Git) which makes the calls to GitHub.
+The CWRC-GitServer in turn invokes [CWRC-Git](https://github.com/cwrc/CWRC-Git) which makes the calls to GitHub.
 
 ### Installation
 
