@@ -2,7 +2,7 @@
 
 # CWRC-GitServer
 
-The CWRC-GitServer is a node.js express server acting as a proxy between [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GithubServer) running in an instance of [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter) (which is itelf an instance of [CWRC-Writer](https://github.com/cwrc/CWRC-Writer) and the Github API.
+The CWRC-GitServer is a node.js express server acting as a proxy between [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GithubServer) running in an instance of [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter) (which is itelf an instance of [CWRC-Writer](https://github.com/cwrc/CWRC-Writer)) and the Github API.
 
 CWRC-GitServer provides http enpoints for listing, creating, and updating CWRC XML documents, along with RDF annotations of the XML document.
 
