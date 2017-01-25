@@ -42,14 +42,15 @@ pm2 startup ubuntu
 
 install nginx:
 
-sudo apt-get install nginx
+````sudo apt-get install nginx````
 
 and change it's config:
 
-sudo vi /etc/nginx/sites-available/default
+````sudo vi /etc/nginx/sites-available/default````
 
 to:
 
+````
 server {
     listen 80;
 
@@ -68,9 +69,10 @@ server {
         proxy_cache_bypass $http_upgrade;
     }
 }
+````
 
 restart nginx:
 
-sudo service nginx restart
+````sudo service nginx restart
 
 
