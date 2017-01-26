@@ -5,8 +5,13 @@
 ## Table of Contents
 
 1. [Overview](#overview)
-1. [Setup](#setup)
 1. [Demo](#demo)
+1. [Setup](#setup)
+1. [Development](#development)
+2. [Fork](#fork)
+2. [Install](#install)
+2. [Development Server](#developmentserver)
+2. [Testing](#testing)
 1. [Contributing](#contributing)
 1. [FAQ](#faq)
 1. [License](#license)
@@ -20,7 +25,9 @@ CWRC-GitServer provides http enpoints for listing, creating, and updating CWRC X
 
 The CWRC-GitServer in turn invokes [CWRC-Git](https://github.com/cwrc/CWRC-Git) which makes the calls to GitHub.
 
-The code in this repository runs the [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html), but may be easily installed on any server to run your own instance.
+### Demo
+
+The code in this repository runs the [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html).  The same code is easily (for someone with some development experience) installed on any server to run your own instance.
 
 ### Setup
 
@@ -92,7 +99,15 @@ restart nginx:
 
 `sudo service nginx restart`
 
-### Demo
+### Development
+
+#### Fork
+
+#### Install
+
+#### Development Server
+
+#### Testing
 
 ### Contributing
 
