@@ -8,7 +8,6 @@
 1. [Demo](#demo)
 1. [Setup](#setup)
 1. [Development](#development)
-    2. [Fork](#fork)
     2. [Install](#install)
     2. [Development Server](#development-server)
     2. [Testing](#testing)
@@ -27,7 +26,9 @@ The CWRC-GitServer in turn invokes [CWRC-Git](https://github.com/cwrc/CWRC-Git) 
 
 ### Demo
 
-The code in this repository runs the [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html).  The same code is easily (for someone with some development experience) installed on any server to run your own instance.
+The [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html) uses the NPM package published from this repository along with the code in [CWRC-Git](https://github.com/cwrc/CWRC-Git), [CWRC-Writer](https://github.com/cwrc/CWRC-Writer),[CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter), and [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitServer). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.
+
+You can find an explanation of how all the parts coordinate in the [CWRC-GitWriter README](https://github.com/jchartrand/CWRC-GitWriter/blob/master/README.md)
 
 ### Setup
 
@@ -101,8 +102,6 @@ restart nginx:
 
 ### Development
 
-#### Fork
-
 #### Install
 
 #### Development Server
@@ -114,3 +113,5 @@ restart nginx:
 ### FAQ
 
 ### License
+
+[GNU GPL V2](LICENSE)
