@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "mocha spec -w",
-    "test:single": "istanbul cover -x ./app.js  _mocha -- -R spec spec",
+    "test:single": "istanbul cover -x ./app.js _mocha -- -R spec spec",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "check-coverage": "istanbul check-coverage --statements 10 --branches 10 --functions 10 --lines 10"
   },
