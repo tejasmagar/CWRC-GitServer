@@ -2,6 +2,10 @@
 
 # CWRC-GitServer
 
+[![Travis](https://img.shields.io/travis/jchartrand/CWRC-GitServer.svg)](https://travis-ci.org/jchartrand/CWRC-GitServer)
+[![Codecov](https://img.shields.io/codecov/c/github/jchartrand/CWRC-GitServer.svg)](https://codecov.io/gh/jchartrand/CWRC-GitServer)
+
+
 ## Table of Contents
 
 1. [Overview](#overview)
@@ -12,6 +16,8 @@
     2. [Setup](#install)
     2. [Development Server](#development-server)
     2. [Testing](#testing)
+    2. [Coverage](#coverage)
+    2. [Travis](#travis)
     2. [Git Hooks](#git-hooks)
 1. [Contributing](#contributing)
 1. [FAQ](#faq)
@@ -167,6 +173,8 @@ Testing uses mocha, chai, and chai-http.
 `npm test` to run tests continuously during development
 `npm test:single` to run a single test.  Also generates code coverage statistics (using Istanbul)
 
+#### Coverage
+
 Code coverage statistics are also run by Travis during the travis build and published to codecov.io
 
 You can also browse the code coverage reports locally by opening:
@@ -174,6 +182,10 @@ You can also browse the code coverage reports locally by opening:
 `coverage/lcov-report/index.html`
 
 in the project directory.
+
+#### Travis
+
+The site is built on Travis whenever a push is made to GitHub.
 
 #### Git Hooks
 
