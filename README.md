@@ -12,6 +12,7 @@
     2. [Setup](#install)
     2. [Development Server](#development-server)
     2. [Testing](#testing)
+    2. [Git Hooks](#git-hooks)
 1. [Contributing](#contributing)
 1. [FAQ](#faq)
 1. [License](#license)
@@ -155,6 +156,20 @@ Testing uses mocha, chai, and chai-http.
 `npm test:single` to run a single test.  Also generates code coverage statistics (using Istanbul)
 
 Code coverage statistics are also run by Travis during the travis build and published to codecov.io
+
+You can also browse the code coverage reports locally by opening:
+
+`coverage/lcov-report/index.html`
+
+in the project directory.
+
+#### Git Hooks
+
+A pre-commit git hook is setup by ghooks to run tests and verify coverage whenever a `git commit` is made.  If the tests fail or the coverage is below the tresholds set in package.json:
+
+`"check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100"`
+
+then the commit will fail.
 
 ### Contributing
 
