@@ -138,9 +138,21 @@ You will also have to install the [CWRC-GitWriter](https://github.com/cwrc/CWRC-
 
 #### Setup
 
-* Clone the repository
+* Fork or clone (depending on your role in the project) the repo to your local machine.
 
-* Install the npm dependencies 'npm install'
+* `npm install` to install the node.js dependencies 
+    
+    NOTE:  we use `npm set save-exact true` to save dependencies as exact version numbers so NPM should install exact versions when you run install
+
+* The config.js file specifies several passwords and tokens.  You'll have to set these values appropriately in your cloned repo.  To prevent git from noticing that you've changed the file (so that you don't inadvertently commit the file and push it to the public repo thereby exposing the passwords) use:
+
+`git update-index --skip-worktree config.js`
+
+* write a test (or two)for your new functionality (in 'spec' directory)
+
+* `npm test` to start mocha and automatically rerun the tests whenever you change a file
+
+* change some stuff to satisfy new test
 
 #### Development Server
 
