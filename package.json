@@ -4,7 +4,10 @@
   "license": "GPL-2.0",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "mocha spec"
+    "test": "mocha spec -w",
+    "test:single": "istanbul cover -x ./app.js  _mocha -- -R spec spec",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "check-coverage": "istanbul check-coverage --statements 10 --branches 10 --functions 10 --lines 10"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -17,10 +20,18 @@
   },
   "devDependencies": {
     "chai-http": "3.0.0",
+    "codecov.io": "0.1.6",
+    "ghooks": "2.0.0",
     "github": "^6.1.0",
+    "istanbul": "0.4.5",
     "js-cookie": "^2.1.3",
     "nock": "^9.0.2",
     "nodemon": "1.11.0",
     "request": "^2.74.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run test:single && npm run check-coverage"
+    }
   }
 }

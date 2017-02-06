@@ -5,10 +5,11 @@
 ## Table of Contents
 
 1. [Overview](#overview)
+1. [API](#api)
 1. [Demo](#demo)
 1. [Setup](#setup)
 1. [Development](#development)
-    2. [Install](#install)
+    2. [Setup](#install)
     2. [Development Server](#development-server)
     2. [Testing](#testing)
 1. [Contributing](#contributing)
@@ -24,11 +25,48 @@ CWRC-GitServer provides http enpoints for listing, creating, and updating CWRC X
 
 The CWRC-GitServer in turn invokes [CWRC-Git](https://github.com/cwrc/CWRC-Git) which makes the calls to GitHub.
 
+### API
+
+The following http calls are supported:
+
+`authenticate`
+
+redirects user to the GitHub Oauth URI
+
+`callback`
+
+the callback given to Github, to which Github returns the user after successful OAuth authentication
+
+`GET github/users`
+
+returns information about the authenticated github user  
+
+`GET github/{username}/repos`
+
+returns a list of repositories for the given github username
+
+`GET github/user/repos`
+
+returns a list of repositories for the authenticated github user
+
+`GET repos/{username}/{repo}/doc`
+
+returns the document with the annotations bundled into the xml header
+
+`POST /user/repos'
+
+creates a new github repository and saves the posted XML document.  If the XML document has annotations in the header, the annotations are saved to individual files in an 'annotations' directory in the new repository.  A timestamp is used to create a tag for the repository so that all files can be accessed by a URI with timestamp (a Linked Data URI), allowing the document and all annotations to be effectively 'bundled' into versions.  
+
+`PUT github/repos/{username}/{repoName}/doc`
+
+saves the posted xml document and annotations to the repository.  As with the POST, all annotations are saved individually, the repo is tagged with a timestamp, and all files are referenced by their Linked Data URI, i.e., the tagged Github URI for each file.
+
+
 ### Demo
 
 The [CWRC GitHub Sandbox](http://208.75.74.217/editor_github.html) uses the NPM package published from this repository along with the code in [CWRC-Git](https://github.com/cwrc/CWRC-Git), [CWRC-Writer](https://github.com/cwrc/CWRC-Writer),[CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter), and [CWRC-GitDelegator](https://github.com/cwrc/CWRC-GitServer). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.
 
-You can find an explanation of how all the parts coordinate in the [CWRC-GitWriter README](https://github.com/jchartrand/CWRC-GitWriter/blob/master/README.md)
+You can find a longer explanation of how all the parts coordinate in the [CWRC-GitWriter README](https://github.com/jchartrand/CWRC-GitWriter/blob/master/README.md)
 
 ### Setup
 
@@ -36,19 +74,12 @@ These are the steps we've used to install the [sandbox version of the CWRC-Write
 
 Install node.js on a server (one approach for ubuntu is described here:  https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
-Clone this repository to your development machine (laptop)
+Clone this repository to the server, or copy the files to the server.
 Add to config.js the server address, the folder on the server into which the app should be installed (e.g., ~/cwrcserver), and the username with which to connect via ssh to the server.
-
-`npm install` (to install the npm packages locally on your dev machine)
-`npm deploy` (to copy the code to the server)
 
 On the server switch into the cwrc server directory and run:
 
 `npm install` (to install the npm packages on the server)
-
-Start the express server:
-
-`DEBUG=cwrc-server:* npm start`
 
 Install pm2 to run express as a service:
 
@@ -100,13 +131,30 @@ restart nginx:
 
 `sudo service nginx restart`
 
+You will also have to install the [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter) code on the server, as explained in its README.
+
 ### Development
 
-#### Install
+#### Setup
+
+* Clone the repository
+
+* Install the npm dependencies 'npm install'
 
 #### Development Server
 
+Start the express server in DEBUG mode:
+
+`DEBUG=cwrc-server:* npm start`
+
 #### Testing
+
+Testing uses mocha, chai, and chai-http.  
+
+`npm test` to run tests continuously during development
+`npm test:single` to run a single test.  Also generates code coverage statistics (using Istanbul)
+
+Code coverage statistics are also run by Travis during the travis build and published to codecov.io
 
 ### Contributing
 
