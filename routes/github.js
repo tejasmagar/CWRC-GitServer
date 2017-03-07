@@ -81,7 +81,7 @@ router.get('/callback', function(req, res, next) {
 		        cwrcGit.authenticate(githubOauthToken);
 		        var jwtToken = jwt.sign(githubOauthToken, config.jwt_secret);
 				res.cookie('cwrc-token', jwtToken);
-			    res.redirect(`/editor_github.html#load`);
+			    res.redirect(`/index.html`);
 		    }
     	})
   	} 

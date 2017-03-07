@@ -39,7 +39,7 @@ describe("CWRCWriter Server Side API", function() {
   });
 
    // get repos for given user
-   describe("GET github/${fixtures.owner}/${fixtures.testRepo}/repos", function() {
+   describe("GET github/${fixtures.owner}/repos", function() {
 
     beforeEach(function() {
       var getReposForGithubUserNock = mocks.getReposForGithubUserNock();
