@@ -170,6 +170,29 @@ describe("CWRCWriter Server Side API", function() {
     });
   });
 
+    // search
+  describe("GET github/search", function() {
+
+    beforeEach(function() {
+      var getSearchNock = mocks.getSearchNock();
+    });
+
+    it("returns correctly", function(done) {
+       chai.request(server)
+            .get(`/github/search`)
+            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .query({q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'}) 
+            .end((err, res) => {
+              console.log(err);
+              console.log(res);
+              res.should.have.status(200);
+              res.body.total_count.should.eq(1);
+              done();
+            });
+    });
+  });
+
+
 
   });
 });

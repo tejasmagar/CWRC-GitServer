@@ -81,7 +81,7 @@ router.get('/callback', function(req, res, next) {
 		        cwrcGit.authenticate(githubOauthToken);
 		        var jwtToken = jwt.sign(githubOauthToken, config.jwt_secret);
 				res.cookie('cwrc-token', jwtToken);
-			    res.redirect(`/index.html`);
+			    res.redirect('/index.html');
 		    }
     	})
   	} 
@@ -129,6 +129,23 @@ router.get('/user/repos', function(req, res, next) {
 router.get('/users/:username/repos', function(req, res, next) {
 	var githubUserName = req.params.username;
 	res.handlePromise(cwrcGit.getReposForUser({username:githubUserName}))
+});
+
+// get templates
+router.get('/templates', function(req, res, next) {
+	res.handlePromise(cwrcGit.getTemplates({}))
+});
+
+// get template
+router.get('/templates/:template', function(req, res, next) {
+	var templateName = req.params.template
+	res.handlePromise(cwrcGit.getTemplate({path:templateName}))
+});
+
+// get template
+router.get('/search', function(req, res, next) {
+	var query = req.query.q
+	res.handlePromise(cwrcGit.search(query))
 });
 
 

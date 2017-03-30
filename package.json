@@ -12,11 +12,11 @@
   "dependencies": {
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
+    "cwrcgit": "1.2.0",
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "jsonwebtoken": "^7.1.9",
-    "morgan": "~1.7.0",
-    "cwrcgit": "1.0.0"
+    "morgan": "~1.7.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
