@@ -4,7 +4,7 @@
 
 [![Travis](https://img.shields.io/travis/jchartrand/CWRC-GitServer.svg)](https://travis-ci.org/jchartrand/CWRC-GitServer)
 [![Codecov](https://img.shields.io/codecov/c/github/jchartrand/CWRC-GitServer.svg)](https://codecov.io/gh/jchartrand/CWRC-GitServer)
-[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges) 
 
 ## Table of Contents
 

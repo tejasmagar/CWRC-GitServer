@@ -31,6 +31,7 @@ function getReposForAuthenticatedUserNock() {
         .reply(201, {"sha":fixtures.newTreeSHA});
 }*/
 
+/*
 function  getGithubCommitNock() {
   // NOTE:  I put in more in the reply than necessary. I  put it in
       // to help explain what's going on.
@@ -43,8 +44,28 @@ function  getGithubCommitNock() {
             "message": fixtures.commitMessage,
             "parents": [{"sha": fixtures.parentCommitSHA}]
         });
+}*/
+
+function  getGithubCommitNock() {
+  // NOTE:  I put in more in the reply than necessary. I  put it in
+      // to help explain what's going on.
+  return nock('https://api.github.com:443', {"encodedQueryParams":true})
+        .post(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/commits`, function(body) {
+          
+          return (body.message === 'saving cwrc version'
+          && body.tree === 'newTreeSHAForTesting'
+          && body.parents[0] === 'parentCommitSHAForTesting')
+          }
+        ).query({"access_token":config.personal_oath_for_testing})
+        .reply(201, {
+            "sha": fixtures.newCommitSHA,
+            "tree": {"sha": fixtures.newTreeSHA},
+            "message": fixtures.commitMessage,
+            "parents": [{"sha": fixtures.parentCommitSHA}]
+        });
 }
 
+/*
 function getCreateGithubCWRCBranchNock() {
    // NOTE:  I didn't really need to return anything in the reply.  It isn't used. I just put it in
       // to help explain what's going on.
@@ -53,28 +74,51 @@ function getCreateGithubCWRCBranchNock() {
         .query({"access_token":config.personal_oath_for_testing})
         .reply(201, {"ref": "refs/heads/cwrc-drafts","object": {"sha": fixtures.newCommitSHA}});
 
-}
+}*/
 
 function getUpdateGithubCWRCBranchNock() {
     // this is exactly the same as the create one above, but uses patch instead of post.
   return nock('https://api.github.com:443', {"encodedQueryParams":true})
-        .patch(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/refs/heads/cwrc-drafts`, {"sha":fixtures.newCommitSHA})
+        .patch(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/refs/heads/master`, {"sha":fixtures.newCommitSHA})
         .query({"access_token":config.personal_oath_for_testing})
-        .reply(201, {"ref": "refs/heads/cwrc-drafts","object": {"sha": fixtures.newCommitSHA}});
+        .reply(201, {"ref": "refs/heads/master","object": {"sha": fixtures.newCommitSHA}});
 }
 
 function getCreateGithubTagNock() {
       // NOTE:  I didn't really need to return anything in the reply.  It isn't used.  I just put it in
       // to help explain what's going on.
       return nock('https://api.github.com:443', {"encodedQueryParams":true})
-        .post(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/refs`, {"ref":`refs/tags/cwrc-drafts/${fixtures.versionTimestamp}`,"sha":fixtures.newCommitSHA})
+        .post(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/refs`, {"ref":`refs/tags/cwrc/${fixtures.versionTimestamp}`,"sha":fixtures.newCommitSHA})
         .query({"access_token":config.personal_oath_for_testing})
         .reply(201, {
-          "ref": `refs/tags/cwrc-drafts/${fixtures.versionTimestamp}`,
+          "ref": `refs/tags/cwrc/${fixtures.versionTimestamp}`,
           "object": {"sha": fixtures.newCommitSHA}
         });
 }
 
+
+function getGithubTreeNock() {
+  // In this one, I only return what's needed for the test to continue, i.e., the newSHA
+  return nock('https://api.github.com:443', {"encodedQueryParams":true})
+        .post(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/trees`, 
+          function(body) {
+                  return (body.tree[0].path === 'document.xml' 
+                  && body.tree[0].content.includes('<encodingDesc><appInfo><application version="1.0" ident="CWRC-GitWriter-web-app" notAfter="')
+                  && body.tree[1].path === 'annotations.json')
+
+                }
+          /*{"tree":[
+            {"path":"document.xml","mode":"100644","type":"blob","content":fixtures.testDocWithTagAdded},
+            {"path":"annotations.json","mode":"100644","type":"blob","content":fixtures.annotationBundleText}
+          ],
+          "base_tree":fixtures.baseTreeSHA
+        }*/
+        )
+        .query({"access_token":config.personal_oath_for_testing})
+        .reply(201, {"sha":fixtures.newTreeSHA});
+}
+
+/*
 function getGithubTreeNock() {
   // In this one, I only return what's needed for the test to continue, i.e., the newSHA
   return nock('https://api.github.com:443', {"encodedQueryParams":true})
@@ -87,7 +131,7 @@ function getGithubTreeNock() {
         })
         .query({"access_token":config.personal_oath_for_testing})
         .reply(201, {"sha":fixtures.newTreeSHA});
-}
+} */
 
 function getCreateGithubRepoNock() {
 // NOTE:  I put in more in the reply than necessary. I  put it in
@@ -119,20 +163,20 @@ function getMasterBranchFromGithubNock() {
 function getDocumentFromGithubNock() {
   return nock('https://api.github.com:443', {"encodedQueryParams":true})
         .get(`/repos/${fixtures.owner}/${fixtures.testRepo}/contents/document.xml`)
-        .query({"ref":"cwrc-drafts", "access_token":config.personal_oath_for_testing})
+        .query({"ref":"master", "access_token":config.personal_oath_for_testing})
         .reply(200, {content: fixtures.base64TestDoc});
 }
 
 function getAnnotationsFromGithubNock() {
   return nock('https://api.github.com:443', {"encodedQueryParams":true})
         .get(`/repos/${fixtures.owner}/${fixtures.testRepo}/contents/annotations.json`)
-        .query({"ref":"cwrc-drafts", "access_token":config.personal_oath_for_testing})
+        .query({"ref":"master", "access_token":config.personal_oath_for_testing})
         .reply(200, {content: fixtures.base64AnnotationBundle});
 }
 
 function getBranchInfoFromGithubNock() {
   return nock('https://api.github.com:443', {"encodedQueryParams":true})
-        .get(`/repos/${fixtures.owner}/${fixtures.testRepo}/branches/cwrc-drafts`)
+        .get(`/repos/${fixtures.owner}/${fixtures.testRepo}/branches/master`)
         .query({"access_token":config.personal_oath_for_testing})
         .reply(200, { "commit": {
                         "sha": "thid doesn't matter",
@@ -344,7 +388,7 @@ function getTemplatesNock(repoDetails) {
 module.exports = {
   getDetailsForAuthenticatedUserNock: getDetailsForAuthenticatedUserNock,
   getGithubCommitNock: getGithubCommitNock,
-  getCreateGithubCWRCBranchNock:getCreateGithubCWRCBranchNock,
+ // getCreateGithubCWRCBranchNock:getCreateGithubCWRCBranchNock,
   getUpdateGithubCWRCBranchNock:getUpdateGithubCWRCBranchNock,
   getCreateGithubTagNock:getCreateGithubTagNock,
   getGithubTreeNock:getGithubTreeNock,

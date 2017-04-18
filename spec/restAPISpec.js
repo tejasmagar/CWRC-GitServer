@@ -32,7 +32,7 @@ describe("CWRCWriter Server Side API", function() {
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
             .end((err, res) => {
               res.should.have.status(200);
-              res.should.be.defined;
+              //res.should.be.defined;
               done();
             });
     });
@@ -94,7 +94,8 @@ describe("CWRCWriter Server Side API", function() {
       var getMasterBranchFromGithubNock = mocks.getMasterBranchFromGithubNock();    
       var createGithubTreeNock = mocks.getGithubTreeNock();
       var createGithubCommitNock = mocks.getGithubCommitNock();
-      var createGithubCWRCBranchNock = mocks.getCreateGithubCWRCBranchNock();
+     // var createGithubCWRCBranchNock = mocks.getCreateGithubCWRCBranchNock();
+      var updateGithubCWRCBranchNock = mocks.getUpdateGithubCWRCBranchNock();
       var createGithubTagNock = mocks.getCreateGithubTagNock();
     });
 
