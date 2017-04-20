@@ -97,6 +97,10 @@ describe("CWRCWriter Server Side API", function() {
      // var createGithubCWRCBranchNock = mocks.getCreateGithubCWRCBranchNock();
       var updateGithubCWRCBranchNock = mocks.getUpdateGithubCWRCBranchNock();
       var createGithubTagNock = mocks.getCreateGithubTagNock();
+
+      var getDocumentFromGithubNock = mocks.getDocumentFromGithubNock();
+      var getAnnotationsFromGithubNock = mocks.getAnnotationsFromGithubNock();
+      var getBranchInfoFromGithubNock = mocks.getBranchInfoFromGithubNock();  
     });
 
     it("returns correctly", function (done) {
@@ -135,7 +139,11 @@ describe("CWRCWriter Server Side API", function() {
       var createGithubTreeNock = mocks.getGithubTreeNock();
       var createGithubCommitNock = mocks.getGithubCommitNock();
       var updateGithubCWRCBranchNock = mocks.getUpdateGithubCWRCBranchNock();
-      var createGithubTagNock = mocks.getCreateGithubTagNock();   
+      var createGithubTagNock = mocks.getCreateGithubTagNock();  
+
+      var getDocumentFromGithubNock = mocks.getDocumentFromGithubNock();
+      var getAnnotationsFromGithubNock = mocks.getAnnotationsFromGithubNock();
+      var getBranchInfoFromGithubNock = mocks.getBranchInfoFromGithubNock();   
     });
 
     it("returns correctly", function(done) {
