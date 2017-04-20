@@ -2,6 +2,11 @@ var nock = require('nock');
 var config = require('../config');
 var fixtures = require('./fixtures.js');
 
+// we use the cwrcAppName to match CWRC GitHub repositories that are themselves documemnts,
+// but we don't match to match repositories that are code repositories,
+// so here we sneakily concatenate the full string to avoid matches on this code repo.
+var cwrcAppName = "CWRC-GitWriter" + "-web-app";
+
 function getDetailsForAuthenticatedUserNock() {
   return nock('https://api.github.com:443', {"encodedQueryParams":true})
     .get('/user')
@@ -103,7 +108,7 @@ function getGithubTreeNock() {
         .post(`/repos/${fixtures.owner}/${fixtures.testRepo}/git/trees`, 
           function(body) {
                   return (body.tree[0].path === 'document.xml' 
-                  && body.tree[0].content.includes('<encodingDesc><appInfo><application version="1.0" ident="CWRC-GitWriter-web-app" notAfter="')
+                  && body.tree[0].content.includes(`<encodingDesc><appInfo><application version="1.0" ident="${cwrcAppName}" notAfter="`)
                   && body.tree[1].path === 'annotations.json')
 
                 }
