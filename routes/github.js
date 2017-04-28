@@ -101,7 +101,7 @@ router.get('/repos/:owner/:repo/doc', function(req, res, next) {
 
 // create repo
 router.post('/user/repos', function(req, res, next) {
-	console.log(req.body);
+	//console.log(req.body);
 	if (!req.body.repo) {
 		res.status(422).send('You need at least a name for your document!')
 	} else if (!req.body.doc) {
