@@ -17,6 +17,7 @@
     2. [Development Server](#development-server)
     2. [Testing](#testing)
     2. [Coverage](#coverage)
+    2. [Commitizen](#commitizen)
     2. [Travis](#travis)
     2. [Git Hooks](#git-hooks)
 1. [Contributing](#contributing)
@@ -182,6 +183,10 @@ You can also browse the code coverage reports locally by opening:
 `coverage/lcov-report/index.html`
 
 in the project directory.
+
+#### Commitizen
+
+When you've got some changes to commit, please use `npm run cm` rather than `git commit`.  `npm run cm` will invoke [Commitizen](https://github.com/commitizen) to structure the commit messages using this standard: [conventional-changelog-angular](https://github.com/conventional-changelog-archived-repos/conventional-changelog-angular/blob/master/index.js).
 
 #### Travis
 
