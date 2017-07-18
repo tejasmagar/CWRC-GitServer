@@ -20,9 +20,7 @@
     2. [Commitizen](#commitizen)
     2. [Travis](#travis)
     2. [Git Hooks](#git-hooks)
-1. [Contributing](#contributing)
-1. [FAQ](#faq)
-1. [License](#license)
+
 
 
 ### Overview
@@ -200,10 +198,4 @@ A pre-commit git hook is setup by ghooks to run tests and verify coverage whenev
 
 then the commit will fail.
 
-### Contributing
 
-### FAQ
-
-### License
-
-[GNU GPL V2](LICENSE)
