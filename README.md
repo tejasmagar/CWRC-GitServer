@@ -1,9 +1,9 @@
-![Picture](http://www.cwrc.ca/wp-content/uploads/2010/12/CWRC_Dec-2-10_smaller.png)
+![Picture](http://cwrc.ca/logos/CWRC_logos_2016_versions/CWRCLogo-Horz-FullColour.png)
 
 # CWRC-GitServer
 
-[![Travis](https://img.shields.io/travis/jchartrand/CWRC-GitServer.svg)](https://travis-ci.org/jchartrand/CWRC-GitServer)
-[![Codecov](https://img.shields.io/codecov/c/github/jchartrand/CWRC-GitServer.svg)](https://codecov.io/gh/jchartrand/CWRC-GitServer)
+[![Travis](https://img.shields.io/travis/cwrc/CWRC-GitServer.svg)](https://travis-ci.org/cwrc/CWRC-GitServer)
+[![Codecov](https://img.shields.io/codecov/c/github/cwrc/CWRC-GitServer.svg)](https://codecov.io/gh/cwrc/CWRC-GitServer)
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges) 
 
 ## Table of Contents
@@ -76,7 +76,7 @@ You can find a longer explanation of how all the parts coordinate in the [CWRC-G
 
 ### Setup
 
-These are the steps we've used to install the [sandbox version of the CWRC-Writer](http://208.75.74.217/editor_github.html):
+These are the steps we've used to install the [sandbox version of the CWRC-Writer](http://208.75.74.217):
 
 Install node.js on a server (one approach for ubuntu is described here:  https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
