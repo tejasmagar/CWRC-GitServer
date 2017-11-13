@@ -13,13 +13,13 @@
 1. [Demo](#demo)
 1. [Setup](#setup)
 1. [Development](#development)
-    2. [Setup](#install)
-    2. [Development Server](#development-server)
-    2. [Testing](#testing)
-    2. [Coverage](#coverage)
-    2. [Commitizen](#commitizen)
-    2. [Travis](#travis)
-    2. [Git Hooks](#git-hooks)
+2. [Development Setup](#install)
+2. [Development Server](#development-server)
+2. [Testing](#testing)
+2. [Coverage](#coverage)
+2. [Commitizen](#commitizen)
+2. [Travis](#travis)
+2. [Git Hooks](#git-hooks)
 
 
 
@@ -141,7 +141,7 @@ You will also have to install the [CWRC-GitWriter](https://github.com/cwrc/CWRC-
 
 ### Development
 
-#### Setup
+#### Development Setup
 
 * Fork or clone (depending on your role in the project) the repo to your local machine.
 

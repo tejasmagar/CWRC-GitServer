@@ -41,3 +41,5 @@ config.js
 
 #sftp
 sftp-config.json
+
+.idea
