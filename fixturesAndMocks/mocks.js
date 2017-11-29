@@ -144,7 +144,7 @@ function getCreateGithubRepoNock() {
       return nock('https://api.github.com:443', {"encodedQueryParams":true})
         .post('/user/repos', {"name":fixtures.testRepo,"description":fixtures.testRepoDescription,"private":fixtures.isPrivate,"auto_init":true})
         .query({"access_token":config.personal_oath_for_testing})
-        .reply(201, {"owner": {"login": fixtures.owner}});
+        .reply(201, {"owner": {"login": fixtures.owner}, "name": fixtures.testRepo});
 }
 
 function getMasterBranchFromGithubNock() {
