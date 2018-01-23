@@ -9,6 +9,7 @@ var config = require('../config');
 var cwrcGit = require('cwrcgit');
 
 
+
 // custom middleware to add standard error handling, based on promises, to routes
 // that use promises, i.e., the routes that make calls to the github api
 function handleResponsePromise(request, response, next) {
@@ -54,10 +55,22 @@ function handleAuthentication(req,res,next) {
     */
 }
 router.use(handleAuthentication);
-	
+
+function getGithubClientId(req) {
+	return config.github_client_id
+}
+
+function getGithubOauthCallback(req) {
+	return config.github_oath_callback
+}
+
+function getGithubClientSecret(req) {
+ return config.github_client_secret
+}
+
 // call that redirects to github for oauth 
 router.get('/authenticate', function(req, res, next) {
-	var githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${config.github_client_id}&scope=repo&redirect_uri=${config.github_oath_callback}`;
+	var githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId(req)}&scope=repo&redirect_uri=${getGithubOauthCallback(req)}`;
 	res.redirect(githubAuthURL);
 });
 
@@ -66,10 +79,11 @@ router.get('/callback', function(req, res, next) {
 	if (!req.query.code) {
     	// do something here, although this shouldn't ever be the case.
   	} else {
+
     	var code = req.query.code;
     	var params = '?code=' + code
-                  + '&client_id=' + config.github_client_id
-                  + '&client_secret=' + config.github_client_secret;
+                  + '&client_id=' + getGithubClientId(req)
+                  + '&client_secret=' + getGithubClientSecret(req)
 
     	var uri = 'https://github.com/login/oauth/access_token'+params;
 
