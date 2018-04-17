@@ -81,7 +81,6 @@ These are the steps we've used to install the [sandbox version of the CWRC-Write
 Install node.js on a server (one approach for ubuntu is described here:  https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions)
 
 Clone this repository to the server, or copy the files to the server.
-Add to config.js the server address, the folder on the server into which the app should be installed (e.g., ~/cwrcserver), and the username with which to connect via ssh to the server.
 
 On the server switch into the cwrc server directory and run:
 
