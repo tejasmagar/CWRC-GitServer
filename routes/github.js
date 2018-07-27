@@ -17,10 +17,14 @@ function handleResponsePromise(request, response, next) {
         promise.then(function(result) {
             response.send(result);
         }).catch(function(error) {
-            console.error("oh no!");
-        	console.log(error);
-        	debug(error);
-        	response.status(500).send(`It broke! The error: ${error}`);
+        	if (error.code === 404) {
+		        response.status(404).send('Not Found')
+	        } else {
+		        console.error("oh no!");
+		        console.log(error);
+		        debug(error);
+		        response.status(500).send(`It broke! The error: ${error}`);
+	        }
         });
     }
     next();
@@ -102,36 +106,28 @@ router.get('/callback', function(req, res, next) {
   	 
 });
 
-/*
-router.get('/repositories/:repoid', function(req, res, next) {
-	res.handlePromise(cwrcGit.getRepoById({id: req.params.repoid}))
-});
-*/
-
 // get doc
-router.get('/repos/:owner/:repo/doc', function(req, res, next) {
-	res.handlePromise(cwrcGit.getDoc({owner: req.params.owner, repo: req.params.repo}))
+router.get('/repos/:owner/:repo/contents', function({params: {owner, repo}, query: {branch, path}}, res, next) {
+	res.handlePromise(cwrcGit.getDoc({owner, repo, branch, path}))
 });
 
 // create repo
-router.post('/user/repos', function(req, res, next) {
-	console.log(req.body);
-	if (!req.body.repo) {
+router.post('/user/repos', function({body}, res, next) {
+	if (!body.repo) {
 		res.status(422).send('You need at least a name for your document!')
-	} else if (!req.body.doc) {
-		res.status(422).send('You need a document!')
 	} else {
-		res.handlePromise(cwrcGit.createRepoForDoc(req.body))
+		res.handlePromise(cwrcGit.createRepo(body))
 	}
 });
 
 // save doc
-router.put('/repos/:owner/:repo/doc', function(req, res, next) {
-	// add the owner and repo to the object already in the body, then
-	// call the cwrc function to save the doc.
-	req.body.owner = req.params.owner;
-	req.body.repo = req.params.repo;
-	res.handlePromise(cwrcGit.saveDoc(req.body));
+router.put('/repos/:owner/:repo/doc', function({params: {owner, repo}, body}, res, next) {
+	res.handlePromise(cwrcGit.saveDoc({...body, owner, repo}));
+});
+
+// save doc in branch and create pull request
+router.put('/repos/:owner/:repo/pr', function({params: {owner, repo}, body}, res, next) {
+	res.handlePromise(cwrcGit.saveAsPullRequest({...body, owner, repo}));
 });
 
 // get details for authenticated user
@@ -140,14 +136,25 @@ router.get('/users', function(req, res, next) {
 });
 
 // get repos for authenticated user
-router.get('/user/repos', function(req, res, next) {
-	res.handlePromise(cwrcGit.getReposForAuthenticatedUser())
+router.get('/user/repos', function({query: {page=1, per_page=10}}, res, next) {
+	res.handlePromise(cwrcGit.getReposForAuthenticatedUser({page, per_page}))
 });
 
 // get repos for given user
-router.get('/users/:username/repos', function(req, res, next) {
-	var githubUserName = req.params.username;
-	res.handlePromise(cwrcGit.getReposForUser({username:githubUserName}))
+router.get('/users/:username/repos', function({params: {username}, query: {page=1, per_page=10}}, res, next) {
+	res.handlePromise(cwrcGit.getReposForUser({username, page, per_page}))
+});
+
+// get structure for repo, using github recursive option
+router.get('/repos/:owner/:repo', function({params: {owner, repo}}, res, next) {
+	res.handlePromise(cwrcGit.getRepoContents({owner, repo}));
+});
+
+// get structure for repo, by manually recursing through subdirs,
+// intended to be used if the github recursive option didn't work
+// because the repository is too big
+router.get('/repos/:owner/:repo/full', function({params: {owner, repo}}, res, next) {
+	res.handlePromise(cwrcGit.getRepoContentsByDrillDown({owner, repo}));
 });
 
 // get templates
@@ -156,16 +163,13 @@ router.get('/templates', function(req, res, next) {
 });
 
 // get template
-router.get('/templates/:template', function(req, res, next) {
-	var templateName = req.params.template
-	res.handlePromise(cwrcGit.getTemplate({path:templateName}))
+router.get('/templates/:template', function({params: {template}}, res, next) {
+	res.handlePromise(cwrcGit.getTemplate({template}))
 });
 
-// get template
-router.get('/search', function(req, res, next) {
-	var query = req.query.q
-	res.handlePromise(cwrcGit.search(query))
+// do search
+router.get('/search', function({query: {q, page=1, per_page=10}}, res, next) {
+	res.handlePromise(cwrcGit.search(q, page, per_page))
 });
-
 
 module.exports = router;

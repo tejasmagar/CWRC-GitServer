@@ -53,7 +53,7 @@ var testDoc = `<?xml version="1.0" encoding="UTF-8"?>
 `;
 
 var owner = 'jchartrand';
-var testRepo = 'aTestO';
+var testRepo = 'aTest';
 var ownerAndRepo = `${owner}/${testRepo}`;
 var versionTimestamp = Math.floor(Date.now() / 1000);
 var base64TestDoc = Buffer.from(testDoc).toString('base64');

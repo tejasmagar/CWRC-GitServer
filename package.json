@@ -7,13 +7,13 @@
     "test": "mocha spec -w",
     "test:single": "istanbul cover -x ./app.js _mocha -- -R spec spec",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "check-coverage": "istanbul check-coverage --statements 10 --branches 10 --functions 10 --lines 10",
+    "check-coverage": "istanbul check-coverage --statements 5 --branches 5 --functions 5 --lines 5",
     "cm": "git-cz"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
-    "cwrcgit": "^1.5.2",
+    "cwrcgit": "^2.0.0",
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "jsonwebtoken": "^8.2.0",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "chai": "3.5.0",
     "chai-http": "3.0.0",
-    "codecov.io": "0.1.6",
+    "codecov.io": "^0.1.6",
     "commitizen": "2.9.6",
     "cz-conventional-changelog": "2.0.0",
     "ghooks": "2.0.0",

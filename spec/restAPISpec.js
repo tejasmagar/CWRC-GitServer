@@ -6,30 +6,66 @@ let config = require('../config');
 let fixtures = require('../fixturesAndMocks/fixtures.js');
 let mocks = require('../fixturesAndMocks/mocks.js');
 let server = require('../app.js');
-
+let repoFullMocks = require('../fixturesAndMocks/repoFullMocks')
+let prMocks = require('../fixturesAndMocks/prMocks')
 chai.use(chaiHttp);
 
 // uncomment the line below to let calls through to Github, and have nock output the results
 // to the console, for use in nock.  I've put past nock recordings in /fixturesAndMocks/mocks.js,
 //  which nock now returns for calls to GitHub that it intercepts (by virtue of 'requiring' nock
 // above.)  See https://github.com/node-nock/nock for full details.
-   //  nock.recorder.rec();
+    // nock.recorder.rec();
 
 describe("CWRCWriter Server Side API", function() {
 
+        // get repo contents using Github recursive option
+    describe("GET '/repos/:owner/:repo", function() {
+	    beforeEach(function () {
+		     mocks.getRepoGetTree()
+            mocks.masterBranchSHAs()
+	    });
+
+	    it("returns status code 200", function (done) {
+		    chai.request(server)
+			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}`)
+			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+			    .end((err, res) => {
+				    res.should.have.status(200);
+				    //res.should.be.defined;
+				    done();
+			    });
+	    });
+    });
+    // get repo contents by 'manually' drilling down through subdirs
+    describe(" GET github/repos/:owner/:repo/full", function() {
+	    beforeEach(function() {
+		   repoFullMocks()
+	    });
+
+	    it("returns status code 200", function(done) {
+		    chai.request(server)
+			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
+			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+			    .end((err, res) => {
+				    res.should.have.status(200);
+				    //res.should.be.defined;
+				    done();
+			    });
+	    });
+    })
+
   // get doc
-   describe("GET github/repos/${fixtures.owner}/${fixtures.testRepo}/doc", function() {
+   describe("GET github/repos/${fixtures.owner}/${fixtures.testRepo}/contents", function() {
 
     beforeEach(function() {
-      var getDocumentFromGithubNock = mocks.getDocumentFromGithubNock();
-      var getAnnotationsFromGithubNock = mocks.getAnnotationsFromGithubNock();
-      var getBranchInfoFromGithubNock = mocks.getBranchInfoFromGithubNock();            
+        mocks.getDoc()
     });
 
     it("returns status code 200", function(done) {
        chai.request(server)
-            .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
+            .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/contents`)
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+           .query({branch: 'jchartrand', path: "curt/qurt/test.txt"})
             .end((err, res) => {
               res.should.have.status(200);
               //res.should.be.defined;
@@ -50,8 +86,11 @@ describe("CWRCWriter Server Side API", function() {
             .get(`/github/users/${fixtures.owner}/repos`)
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
             .end((err, res) => {
+            	console.log('in the get repos test')
+            	console.log(err)
+	            console.log(res)
               res.should.have.status(200);
-              res.body[0].owner.login.should.eq(fixtures.owner);
+              res.body.data[0].owner.login.should.eq(fixtures.owner);
               done();
             });
     });
@@ -70,37 +109,24 @@ describe("CWRCWriter Server Side API", function() {
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
             .end((err, res) => {
               res.should.have.status(200);
-              res.body[0].name.should.eq(fixtures.testRepo);
+              res.body.data[0].name.should.eq(fixtures.testRepo);
               done();
             });
     });
   });
 
-   // create new doc/repo
+   // create new repo
    describe("POST /user/repos", function() {
     
     let data =
           {
           repo: fixtures.testRepo,
-          isPrivate: fixtures.isPrivate, 
-          doc:fixtures.testDoc, 
-          description: fixtures.testRepoDescription,
-          annotations: fixtures.annotationBundleText,
-          versionTimestamp: fixtures.versionTimestamp
+          isPrivate: fixtures.isPrivate,
+          description: fixtures.testRepoDescription
         };
 
     beforeEach(function() {
-      var createGithubRepoNock = mocks.getCreateGithubRepoNock();
-      var getMasterBranchFromGithubNock = mocks.getMasterBranchFromGithubNock();    
-      var createGithubTreeNock = mocks.getGithubTreeNock();
-      var createGithubCommitNock = mocks.getGithubCommitNock();
-     // var createGithubCWRCBranchNock = mocks.getCreateGithubCWRCBranchNock();
-      var updateGithubCWRCBranchNock = mocks.getUpdateGithubCWRCBranchNock();
-      var createGithubTagNock = mocks.getCreateGithubTagNock();
-
-      var getDocumentFromGithubNock = mocks.getDocumentFromGithubNock();
-      var getAnnotationsFromGithubNock = mocks.getAnnotationsFromGithubNock();
-      var getBranchInfoFromGithubNock = mocks.getBranchInfoFromGithubNock();  
+      mocks.getCreateGithubRepoNock();
     });
 
     it("returns correctly", function (done) {
@@ -110,56 +136,76 @@ describe("CWRCWriter Server Side API", function() {
             .send(data)
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.doc.should.eq(fixtures.testDoc);
-                res.body.annotations.should.eq(fixtures.annotationBundleText);
                 res.body.owner.should.eq(fixtures.owner);
                 res.body.repo.should.eq(fixtures.testRepo);
-                res.body.baseTreeSHA.should.be.defined
-                res.body.parentCommitSHA.should.be.defined;
               done();
             });
     });
 
   });
-
+	//nock.recorder.rec();
    // save doc
   describe("PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/doc", function() {
 
-    let data = {
-      owner: fixtures.owner, 
-      repo: fixtures.testRepo,
-      doc: fixtures.testDoc, 
-      annotations: fixtures.annotationBundleText,
-      versionTimestamp: fixtures.versionTimestamp,
-      baseTreeSHA: fixtures.baseTreeSHA,
-      parentCommitSHA: fixtures.parentCommitSHA
-    }
+	  let data = {
+		  owner: fixtures.owner,
+		  repo: fixtures.testRepo,
+		  content: fixtures.testDoc,
+		  message: 'some commit message',
+		  branch: 'jchartrand',
+		  path: 'curt/qurt/test.txt'
+	  }
 
-    beforeEach(function() {
-      var createGithubTreeNock = mocks.getGithubTreeNock();
-      var createGithubCommitNock = mocks.getGithubCommitNock();
-      var updateGithubCWRCBranchNock = mocks.getUpdateGithubCWRCBranchNock();
-      var createGithubTagNock = mocks.getCreateGithubTagNock();  
+	  beforeEach(function () {
+		  mocks.saveDocExistingSHA()
+		  mocks.saveDoc()
+	  });
 
-      var getDocumentFromGithubNock = mocks.getDocumentFromGithubNock();
-      var getAnnotationsFromGithubNock = mocks.getAnnotationsFromGithubNock();
-      var getBranchInfoFromGithubNock = mocks.getBranchInfoFromGithubNock();   
-    });
+	  it("returns correctly", function (done) {
 
-    it("returns correctly", function(done) {
+		  chai.request(server)
+			  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
+			  .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+			  .send(data)
+			  .end((err, res) => {
+				  res.should.have.status(200);
+				  res.body.sha.should.be.defined
+				  done();
+			  });
+	  });
+  })
 
-      chai.request(server)
-            .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
-            .send(data)
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.newTreeSHA.should.be.defined
-                res.body.newCommitSHA.should.be.defined;
-              done();
-            });
-    });
+	 // nock.recorder.rec();
+	  // save doc in branch and issue pull request
+	  describe("PUT github/repos/${fixtures.owner}/${fixtures.testRepo}/pr", function() {
 
+		  let data = {
+			  owner: fixtures.owner,
+			  repo: fixtures.testRepo,
+			  content: fixtures.testDoc,
+			  message: 'some commit message',
+			  title: 'a title for the pull request',
+			  branch: 'jchartrand',
+			  path: 'curt/qurt/test.txt'
+		  }
+
+		  beforeEach(function () {
+			  prMocks()
+		  });
+
+		  it("returns correctly", function (done) {
+
+			  chai.request(server)
+				  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
+				  .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+				  .send(data)
+				  .end((err, res) => {
+					  res.should.have.status(200);
+					  res.body.sha.should.be.defined
+					  done();
+				  });
+		  });
+	  });
     // get details for authenticated user
   describe("GET github/users", function() {
 
@@ -173,7 +219,7 @@ describe("CWRCWriter Server Side API", function() {
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
             .end((err, res) => {
               res.should.have.status(200);
-              res.body.login.should.eq(fixtures.owner);
+              res.body.data.login.should.eq(fixtures.owner);
               done();
             });
     });
@@ -195,13 +241,10 @@ describe("CWRCWriter Server Side API", function() {
               console.log(err);
               console.log(res);
               res.should.have.status(200);
-              res.body.total_count.should.eq(1);
+              res.body.data.total_count.should.eq(1);
               done();
             });
     });
   });
 
-
-
-  });
 });
