@@ -86,9 +86,6 @@ describe("CWRCWriter Server Side API", function() {
             .get(`/github/users/${fixtures.owner}/repos`)
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
             .end((err, res) => {
-            	console.log('in the get repos test')
-            	console.log(err)
-	            console.log(res)
               res.should.have.status(200);
               res.body.data[0].owner.login.should.eq(fixtures.owner);
               done();
@@ -238,8 +235,6 @@ describe("CWRCWriter Server Side API", function() {
             .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
             .query({q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'}) 
             .end((err, res) => {
-              console.log(err);
-              console.log(res);
               res.should.have.status(200);
               res.body.data.total_count.should.eq(1);
               done();
