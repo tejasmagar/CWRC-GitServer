@@ -47,9 +47,6 @@ describe("CWRCWriter Server Side API", function() {
 			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
 			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
 			    .end((err, res) => {
-			    	console.log('test full repo')
-			    	console.log(err)
-				    console.log(res)
 				    res.should.have.status(200);
 				    //res.should.be.defined;
 				    done();
@@ -193,7 +190,7 @@ describe("CWRCWriter Server Side API", function() {
 			  prMocks()
 		  });
 
-		  it("returns correctly", function (done) {
+		  xit("returns correctly", function (done) {
 
 			  chai.request(server)
 				  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
