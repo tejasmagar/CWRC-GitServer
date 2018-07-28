@@ -6,8 +6,8 @@ let config = require('../config');
 let fixtures = require('../fixturesAndMocks/fixtures.js');
 let mocks = require('../fixturesAndMocks/mocks.js');
 let server = require('../app.js');
-let repoFullMocks = require('../fixturesAndMocks/repoFullMocks')
-let prMocks = require('../fixturesAndMocks/prMocks')
+let repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
+let prMocks = require('../fixturesAndMocks/prMocks.js')
 chai.use(chaiHttp);
 
 // uncomment the line below to let calls through to Github, and have nock output the results
@@ -47,6 +47,9 @@ describe("CWRCWriter Server Side API", function() {
 			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
 			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
 			    .end((err, res) => {
+			    	console.log('test full repo')
+			    	console.log(err)
+				    console.log(res)
 				    res.should.have.status(200);
 				    //res.should.be.defined;
 				    done();
