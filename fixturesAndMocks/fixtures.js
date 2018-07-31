@@ -55,6 +55,7 @@ var testDoc = `<?xml version="1.0" encoding="UTF-8"?>
 var owner = 'jchartrand';
 var testRepo = 'aTest';
 var ownerAndRepo = `${owner}/${testRepo}`;
+const templateName = 'Sample TEI letter.xml'
 var versionTimestamp = Math.floor(Date.now() / 1000);
 var base64TestDoc = Buffer.from(testDoc).toString('base64');
 var annotationBundleText = "some annotations";
@@ -89,6 +90,7 @@ module.exports = {
 	isPrivate: isPrivate,
 	baseTreeSHA: baseTreeSHA,
 	parentCommitSHA: parentCommitSHA,
+	templateName: templateName,
 	newTreeSHA: newTreeSHA,
 	newCommitSHA: newCommitSHA,
 	commitMessage: commitMessage,

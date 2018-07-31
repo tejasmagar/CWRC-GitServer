@@ -164,7 +164,7 @@ router.get('/templates', function(req, res, next) {
 
 // get template
 router.get('/templates/:template', function({params: {template}}, res, next) {
-	res.handlePromise(cwrcGit.getTemplate({template}))
+	res.handlePromise(cwrcGit.getTemplate({path: template}))
 });
 
 // do search

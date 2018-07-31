@@ -8,13 +8,14 @@ let mocks = require('../fixturesAndMocks/mocks.js');
 let server = require('../app.js');
 let repoFullMocks = require('../fixturesAndMocks/repoFullMocks.js')
 let prMocks = require('../fixturesAndMocks/prMocks.js')
+let templateMocks = require('../fixturesAndMocks/templateMocks.js')
 chai.use(chaiHttp);
 
 // uncomment the line below to let calls through to Github, and have nock output the results
 // to the console, for use in nock.  I've put past nock recordings in /fixturesAndMocks/mocks.js,
 //  which nock now returns for calls to GitHub that it intercepts (by virtue of 'requiring' nock
 // above.)  See https://github.com/node-nock/nock for full details.
-    // nock.recorder.rec();
+//nock.recorder.rec();
 
 describe("CWRCWriter Server Side API", function() {
 
@@ -241,5 +242,26 @@ describe("CWRCWriter Server Side API", function() {
             });
     });
   });
+
+	// get repo contents using Github recursive option
+	describe("GET '/templates/:templateName", function() {
+		beforeEach(function () {
+			templateMocks();
+			//mocks.getRepoGetTree()
+			//mocks.masterBranchSHAs()
+		});
+
+		it("returns status code 200", function (done) {
+			chai.request(server)
+				.get(`/github/templates/${fixtures.templateName}`)
+				.set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+				.end((err, res) => {
+					res.should.have.status(200);
+					//res.should.be.defined;
+					done();
+				});
+		});
+	});
+
 
 });
