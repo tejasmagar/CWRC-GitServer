@@ -136,8 +136,8 @@ router.get('/users', function(req, res, next) {
 });
 
 // get repos for authenticated user
-router.get('/user/repos', function({query: {page=1, per_page=10}}, res, next) {
-	res.handlePromise(cwrcGit.getReposForAuthenticatedUser({page, per_page}))
+router.get('/user/repos', function({query: {page=1, per_page=10, affiliation='owner'}}, res, next) {
+	res.handlePromise(cwrcGit.getReposForAuthenticatedUser({page, per_page, affiliation}))
 });
 
 // get repos for given user

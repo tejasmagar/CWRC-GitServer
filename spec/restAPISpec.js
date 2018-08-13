@@ -43,7 +43,7 @@ describe("CWRCWriter Server Side API", function() {
 		   repoFullMocks()
 	    });
 
-	    xit("returns status code 200", function(done) {
+	    it("returns status code 200", function(done) {
 		    chai.request(server)
 			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
 			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
@@ -191,7 +191,7 @@ describe("CWRCWriter Server Side API", function() {
 			  prMocks()
 		  });
 
-		  xit("returns correctly", function (done) {
+		  it("returns correctly", function (done) {
 
 			  chai.request(server)
 				  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
