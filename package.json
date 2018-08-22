@@ -11,28 +11,28 @@
     "cm": "git-cz"
   },
   "dependencies": {
-    "body-parser": "~1.15.1",
-    "cookie-parser": "~1.4.3",
-    "cwrcgit": "^2.0.1",
-    "debug": "~2.2.0",
-    "express": "~4.13.4",
-    "jsonwebtoken": "^8.2.0",
-    "morgan": "~1.7.0"
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cwrcgit": "^2.0.2",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
-    "chai": "3.5.0",
-    "chai-http": "3.0.0",
-    "codecov.io": "^0.1.6",
-    "commitizen": "2.9.6",
-    "cz-conventional-changelog": "2.0.0",
-    "ghooks": "2.0.0",
-    "github": "^6.1.0",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "codecov": "^3.0.4",
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "ghooks": "^2.0.4",
+    "github": "^14.0.0",
     "istanbul": "^1.0.0-alpha.2",
-    "js-cookie": "^2.1.3",
-    "mocha": "3.2.0",
-    "nock": "^9.0.2",
-    "nodemon": "1.11.0",
-    "request": "^2.74.0"
+    "js-cookie": "^2.2.0",
+    "mocha": "^5.2.0",
+    "nock": "^9.6.1",
+    "nodemon": "^1.18.3",
+    "request": "^2.88.0"
   },
   "config": {
     "ghooks": {

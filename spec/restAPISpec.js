@@ -32,7 +32,6 @@ describe("CWRCWriter Server Side API", function() {
 			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
 			    .end((err, res) => {
 				    res.should.have.status(200);
-				    //res.should.be.defined;
 				    done();
 			    });
 	    });
@@ -49,7 +48,6 @@ describe("CWRCWriter Server Side API", function() {
 			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
 			    .end((err, res) => {
 				    res.should.have.status(200);
-				    //res.should.be.defined;
 				    done();
 			    });
 	    });
@@ -69,7 +67,6 @@ describe("CWRCWriter Server Side API", function() {
            .query({branch: 'jchartrand', path: "curt/qurt/test.txt"})
             .end((err, res) => {
               res.should.have.status(200);
-              //res.should.be.defined;
               done();
             });
     });
@@ -167,7 +164,7 @@ describe("CWRCWriter Server Side API", function() {
 			  .send(data)
 			  .end((err, res) => {
 				  res.should.have.status(200);
-				  res.body.sha.should.be.defined
+				  res.body.sha.should.exist
 				  done();
 			  });
 	  });
@@ -199,7 +196,7 @@ describe("CWRCWriter Server Side API", function() {
 				  .send(data)
 				  .end((err, res) => {
 					  res.should.have.status(200);
-					  res.body.sha.should.be.defined
+					  res.body.sha.should.exist
 					  done();
 				  });
 		  });
@@ -257,7 +254,6 @@ describe("CWRCWriter Server Side API", function() {
 				.set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
 				.end((err, res) => {
 					res.should.have.status(200);
-					//res.should.be.defined;
 					done();
 				});
 		});
