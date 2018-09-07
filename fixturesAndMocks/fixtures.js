@@ -74,7 +74,7 @@ var commitMessage = 'saving cwrc draft';
 
 var cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret);
  
-
+var githubToken = config.personal_oath_for_testing
 
 module.exports = {
 	testDoc: testDoc,
@@ -94,5 +94,6 @@ module.exports = {
 	newTreeSHA: newTreeSHA,
 	newCommitSHA: newCommitSHA,
 	commitMessage: commitMessage,
-	cwrcJWTTokenContainingGithubOathToken:cwrcJWTTokenContainingGithubOathToken
+	cwrcJWTTokenContainingGithubOathToken:cwrcJWTTokenContainingGithubOathToken,
+	githubToken: githubToken
 }

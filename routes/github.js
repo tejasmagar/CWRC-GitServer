@@ -35,19 +35,11 @@ router.use(handleResponsePromise);
 // the cwrc-token contains the github oath token.
 function handleAuthentication(req,res,next) {
 
-    // the githubToken will, if present, be embedded in the jwt that is in the header, as above.
-    var jwtToken = req.headers['cwrc-token'];
-	if (jwtToken) {
-		jwt.verify(jwtToken, config.jwt_secret, function(err, decodedGithHubToken) {
-			if (err) {
-		        //return res.json({ success: false, message: 'Failed to authenticate token.' });   
-		        next(); 
-		    } else {
-		        cwrcGit.authenticate(decodedGithHubToken);
-		        req.githubAuthenticated = true;
-				next();
-		    }
-		});
+    const githubToken = req.headers['cwrc-token'];
+    if (githubToken) {
+	    cwrcGit.authenticate(githubToken);
+	    req.githubAuthenticated = true;
+	    next();
 	} else {
 		req.githubAuthenticated = false;
 		next();
@@ -97,8 +89,7 @@ router.get('/callback', function(req, res, next) {
 		    } else {
 		    	var githubOauthToken = (qs.parse(body)).access_token;
 		        cwrcGit.authenticate(githubOauthToken);
-		        var jwtToken = jwt.sign(githubOauthToken, config.jwt_secret);
-				res.cookie('cwrc-token', jwtToken);
+		        res.cookie('cwrc-token', githubOauthToken);
 			    res.redirect('/');
 		    }
     	})

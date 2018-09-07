@@ -29,7 +29,7 @@ describe("CWRCWriter Server Side API", function() {
 	    it("returns status code 200", function (done) {
 		    chai.request(server)
 			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}`)
-			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+			    .set('cwrc-token', fixtures.githubToken)
 			    .end((err, res) => {
 				    res.should.have.status(200);
 				    done();
@@ -45,7 +45,7 @@ describe("CWRCWriter Server Side API", function() {
 	    it("returns status code 200", function(done) {
 		    chai.request(server)
 			    .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/full`)
-			    .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+			    .set('cwrc-token', fixtures.githubToken)
 			    .end((err, res) => {
 				    res.should.have.status(200);
 				    done();
@@ -63,7 +63,7 @@ describe("CWRCWriter Server Side API", function() {
     it("returns status code 200", function(done) {
        chai.request(server)
             .get(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/contents`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .set('cwrc-token', fixtures.githubToken)
            .query({branch: 'jchartrand', path: "curt/qurt/test.txt"})
             .end((err, res) => {
               res.should.have.status(200);
@@ -82,7 +82,7 @@ describe("CWRCWriter Server Side API", function() {
     it("returns correctly", function(done) {
        chai.request(server)
             .get(`/github/users/${fixtures.owner}/repos`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .set('cwrc-token', fixtures.githubToken)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.data[0].owner.login.should.eq(fixtures.owner);
@@ -101,7 +101,7 @@ describe("CWRCWriter Server Side API", function() {
      it("returns correctly", function(done) {
        chai.request(server)
             .get(`/github/user/repos`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .set('cwrc-token', fixtures.githubToken)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.data[0].name.should.eq(fixtures.testRepo);
@@ -127,7 +127,7 @@ describe("CWRCWriter Server Side API", function() {
     it("returns correctly", function (done) {
         chai.request(server)
             .post(`/github/user/repos`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .set('cwrc-token', fixtures.githubToken)
             .send(data)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -160,7 +160,7 @@ describe("CWRCWriter Server Side API", function() {
 
 		  chai.request(server)
 			  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/doc`)
-			  .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+			  .set('cwrc-token', fixtures.githubToken)
 			  .send(data)
 			  .end((err, res) => {
 				  res.should.have.status(200);
@@ -192,7 +192,7 @@ describe("CWRCWriter Server Side API", function() {
 
 			  chai.request(server)
 				  .put(`/github/repos/${fixtures.owner}/${fixtures.testRepo}/pr`)
-				  .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+				  .set('cwrc-token', fixtures.githubToken)
 				  .send(data)
 				  .end((err, res) => {
 					  res.should.have.status(200);
@@ -211,7 +211,7 @@ describe("CWRCWriter Server Side API", function() {
     it("returns correctly", function(done) {
        chai.request(server)
             .get(`/github/users`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .set('cwrc-token', fixtures.githubToken)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.data.login.should.eq(fixtures.owner);
@@ -230,7 +230,7 @@ describe("CWRCWriter Server Side API", function() {
     it("returns correctly", function(done) {
        chai.request(server)
             .get(`/github/search`)
-            .set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+            .set('cwrc-token', fixtures.githubToken)
             .query({q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'}) 
             .end((err, res) => {
               res.should.have.status(200);
@@ -251,7 +251,7 @@ describe("CWRCWriter Server Side API", function() {
 		it("returns status code 200", function (done) {
 			chai.request(server)
 				.get(`/github/templates/${fixtures.templateName}`)
-				.set('cwrc-token', fixtures.cwrcJWTTokenContainingGithubOathToken)
+				.set('cwrc-token', fixtures.githubToken)
 				.end((err, res) => {
 					res.should.have.status(200);
 					done();
