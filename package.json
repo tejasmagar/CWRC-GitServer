@@ -11,6 +11,10 @@
     "check-coverage": "nyc check-coverage",
     "cm": "git-cz"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cwrc/CWRC-GitServer.git"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
@@ -29,7 +33,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "codecov": "^3.5.0",
-    "commitizen": "^2.10.1",
+    "commitizen": "^3.1.1",
     "cz-conventional-changelog": "^2.1.0",
     "github": "^14.0.0",
     "husky": "^2.4.1",
