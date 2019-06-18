@@ -4,7 +4,6 @@
   "license": "GPL-2.0",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "build": "browserify bin/www -o build/www --debug --verbose -g [ babelify --presets [ @babel/preset-env ] ]",
     "test:debug": "mocha spec -w",
     "test": "nyc mocha spec",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
@@ -25,11 +24,6 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "babel-cli": "^6.26.0",
-    "babelify": "^10.0.0",
-    "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "codecov": "^3.5.0",
