@@ -13,6 +13,12 @@ var cwrcGit = require('cwrcgit');
 // custom middleware to add standard error handling, based on promises, to routes
 // that use promises, i.e., the routes that make calls to the github api
 function handleResponsePromise(request, response, next) {
+	// CORS, uncomment for local dev
+	// response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+    // response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+	// response.header('Access-Control-Allow-Headers', 'cwrc-token');
+	// response.header('Access-Control-Allow-Credentials', 'true');
+
     response.handlePromise = function(promise) {
         promise.then(function(result) {
             response.send(result);
