@@ -142,6 +142,11 @@ router.get('/users/:username/repos', function({params: {username}, query: {page=
 	res.handlePromise(cwrcGit.getReposForUser({username, page, per_page}))
 });
 
+// get permissions for a given user and repo
+router.get('/repos/:owner/:repo/collaborators/:username/permission', function({params: {owner, repo, username}}, res, next) {
+	res.handlePromise(cwrcGit.getPermissionsForUser(owner, repo, username))
+});
+
 // get structure for repo, using github recursive option
 router.get('/repos/:owner/:repo', function({params: {owner, repo}}, res, next) {
 	res.handlePromise(cwrcGit.getRepoContents({owner, repo}));
