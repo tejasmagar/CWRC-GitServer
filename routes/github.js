@@ -29,7 +29,7 @@ function handleResponsePromise(request, response, next) {
 		        console.error("oh no!");
 		        console.log(error);
 		        debug(error);
-		        response.status(500).send(`It broke! The error: ${error}`);
+		        response.status(500).send(error);
 	        }
         });
     }
