@@ -127,6 +127,11 @@ router.put('/repos/:owner/:repo/pr', function({params: {owner, repo}, body}, res
 	res.handlePromise(cwrcGit.saveAsPullRequest({...body, owner, repo}));
 });
 
+// get details for a user
+router.get('/users/:username', function({params: {username}}, res, next) {
+	res.handlePromise(cwrcGit.getDetailsForUser({username}))
+});
+
 // get details for authenticated user
 router.get('/users', function(req, res, next) {
 	res.handlePromise(cwrcGit.getDetailsForAuthenticatedUser())
@@ -158,6 +163,23 @@ router.get('/repos/:owner/:repo', function({params: {owner, repo}}, res, next) {
 router.get('/repos/:owner/:repo/full', function({params: {owner, repo}}, res, next) {
 	res.handlePromise(cwrcGit.getRepoContentsByDrillDown({owner, repo}));
 });
+
+/* org routes */
+
+// get details for an org
+router.get('/orgs/:org', function({params: {org}}, res, next) {
+	res.handlePromise(cwrcGit.getDetailsForOrg({org}));
+});
+
+// create org repo
+router.post('/orgs/:org/repos', function({params: {org}, body}, res, next) {
+	if (!body.repo) {
+		res.status(422).send('You need at least a name for your document!')
+	} else {
+		res.handlePromise(cwrcGit.createOrgRepo({...body, org}))
+	}
+});
+
 
 // get templates
 router.get('/templates', function(req, res, next) {
