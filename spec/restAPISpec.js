@@ -221,7 +221,7 @@ describe("CWRCWriter Server Side API", function() {
   });
 
     // search
-  describe("GET github/search", function() {
+  describe("GET github/search/code", function() {
 
     beforeEach(function() {
       var getSearchNock = mocks.getSearchNock();
@@ -229,7 +229,7 @@ describe("CWRCWriter Server Side API", function() {
 
     it("returns correctly", function(done) {
        chai.request(server)
-            .get(`/github/search`)
+            .get(`/github/search/code`)
             .set('cwrc-token', fixtures.githubToken)
             .query({q: 'cwrc-melbourne+repo:jchartrand/cleanDoc2'}) 
             .end((err, res) => {

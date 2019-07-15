@@ -191,9 +191,14 @@ router.get('/templates/:template', function({params: {template}}, res, next) {
 	res.handlePromise(cwrcGit.getTemplate({path: template}))
 });
 
-// do search
-router.get('/search', function({query: {q, page=1, per_page=10}}, res, next) {
-	res.handlePromise(cwrcGit.search(q, page, per_page))
+// do code search
+router.get('/search/code', function({query: {q, page=1, per_page=10}}, res, next) {
+	res.handlePromise(cwrcGit.searchCode(q, page, per_page))
+});
+
+// do repos search
+router.get('/search/repositories', function({query: {q, page=1, per_page=10}}, res, next) {
+	res.handlePromise(cwrcGit.searchRepos(q, page, per_page))
 });
 
 module.exports = router;
