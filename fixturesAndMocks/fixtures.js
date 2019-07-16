@@ -72,7 +72,7 @@ var newCommitSHA = 'newCommitSHAForTesting';
 
 var commitMessage = 'saving cwrc draft';
 
-var cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret);
+var cwrcJWTTokenContainingGithubOathToken = jwt.sign(config.personal_oath_for_testing, config.jwt_secret_for_testing);
  
 var githubToken = config.personal_oath_for_testing
 
