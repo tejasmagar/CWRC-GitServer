@@ -2,22 +2,39 @@ var express = require('express');
 var router = express.Router();
 var request = require('request')
 var debug = require('debug')('cwrc-server:server');
-
-var jwt    = require('jsonwebtoken');
 var qs = require('querystring');
-var config = require('../config');
 var cwrcGit = require('cwrcgit');
 
+var config = require('../config.js');
 
+function isGithubClientCORS() {
+	return config.github_client_cors
+}
+function getGithubClientOrigin() {
+	return config.github_client_origin
+}
+function getGithubClientId() {
+	return config.github_client_id
+}
+function getGithubOauthCallback() {
+	return config.github_oath_callback
+}
+function getGithubClientSecret() {
+	return config.github_client_secret
+}
+function getAuthenticationCallbackRedirect() {
+	return config.github_oath_callback_redirect
+}
 
 // custom middleware to add standard error handling, based on promises, to routes
 // that use promises, i.e., the routes that make calls to the github api
 function handleResponsePromise(request, response, next) {
-	// CORS, uncomment for local dev
-	// response.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-    // response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-	// response.header('Access-Control-Allow-Headers', 'cwrc-token');
-	// response.header('Access-Control-Allow-Credentials', 'true');
+	if (isGithubClientCORS()) {
+		response.header('Access-Control-Allow-Origin', getGithubClientOrigin());
+		response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
+		response.header('Access-Control-Allow-Headers', 'cwrc-token, Content-Type');
+		response.header('Access-Control-Allow-Credentials', 'true');
+	}
 
     response.handlePromise = function(promise) {
         promise.then(function(result) {
@@ -58,21 +75,9 @@ function handleAuthentication(req,res,next) {
 }
 router.use(handleAuthentication);
 
-function getGithubClientId(req) {
-	return config.github_client_id
-}
-
-function getGithubOauthCallback(req) {
-	return config.github_oath_callback
-}
-
-function getGithubClientSecret(req) {
- return config.github_client_secret
-}
-
 // call that redirects to github for oauth 
 router.get('/authenticate', function(req, res, next) {
-	var githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId(req)}&scope=repo&redirect_uri=${getGithubOauthCallback(req)}`;
+	var githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${getGithubClientId()}&scope=repo&redirect_uri=${getGithubOauthCallback()}`;
 	res.redirect(githubAuthURL);
 });
 
@@ -84,8 +89,8 @@ router.get('/callback', function(req, res, next) {
 
     	var code = req.query.code;
     	var params = '?code=' + code
-                  + '&client_id=' + getGithubClientId(req)
-                  + '&client_secret=' + getGithubClientSecret(req)
+                  + '&client_id=' + getGithubClientId()
+                  + '&client_secret=' + getGithubClientSecret()
 
     	var uri = 'https://github.com/login/oauth/access_token'+params;
 
@@ -96,7 +101,7 @@ router.get('/callback', function(req, res, next) {
 		    	var githubOauthToken = (qs.parse(body)).access_token;
 		        cwrcGit.authenticate(githubOauthToken);
 		        res.cookie('cwrc-token', githubOauthToken);
-			    res.redirect('/');
+			    res.redirect(getAuthenticationCallbackRedirect());
 		    }
     	})
   	} 
