@@ -191,6 +191,7 @@ router.get('/repos/:owner/:repo/contents', function({params: {owner, repo}, quer
 
 /**
  * Create a repo in the authenticated user's account.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#createRepo}
  * @name post/user/repos
  * @function
  * @memberof module:routes/github~router
@@ -210,6 +211,7 @@ router.post('/user/repos', function({body}, res, next) {
 
 /**
  * Save a document.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveDoc}
  * @name put/repos/:owner/:repo/doc
  * @function
  * @memberof module:routes/github~router
@@ -229,6 +231,7 @@ router.put('/repos/:owner/:repo/doc', function({params: {owner, repo}, body}, re
 
 /**
  * Save a document as a pull request.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveAsPullRequest}
  * @name put/repos/:owner/:repo/pr
  * @function
  * @memberof module:routes/github~router
@@ -249,6 +252,7 @@ router.put('/repos/:owner/:repo/pr', function({params: {owner, repo}, body}, res
 
 /**
  * Get details for a user.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForUser}
  * @name get/users/:username
  * @function
  * @memberof module:routes/github~router
@@ -261,6 +265,7 @@ router.get('/users/:username', function({params: {username}}, res, next) {
 
 /**
  * Get details for the authenticated user.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForAuthenticatedUser}
  * @name get/users
  * @function
  * @memberof module:routes/github~router
@@ -271,6 +276,7 @@ router.get('/users', function(req, res, next) {
 
 /**
  * Get the repos for the authenticated user.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getReposForAuthenticatedUser}
  * @name get/user/repos
  * @function
  * @memberof module:routes/github~router
@@ -285,6 +291,7 @@ router.get('/user/repos', function({query: {page=1, per_page=10, affiliation='ow
 
 /**
  * Get the repos for a user.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getReposForUser}
  * @name get/users/:username/repos
  * @function
  * @memberof module:routes/github~router
@@ -299,6 +306,7 @@ router.get('/users/:username/repos', function({params: {username}, query: {page=
 
 /**
  * Get permissions for a given user and repo.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getPermissionsForUser}
  * @name get/repos/:owner/:repo/collaborators/:username/permission
  * @function
  * @memberof module:routes/github~router
@@ -313,6 +321,7 @@ router.get('/repos/:owner/:repo/collaborators/:username/permission', function({p
 
 /**
  * Get the structure for a repo, using GitHub recursive option.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getRepoContents}
  * @name get/repos/:owner/:repo
  * @function
  * @memberof module:routes/github~router
@@ -327,6 +336,7 @@ router.get('/repos/:owner/:repo', function({params: {owner, repo}}, res, next) {
 /**
  * Get the structure for a repo, by manually recursing through subdirectories.
  * Intended to be used if the GitHub recursive option didn't work because the repository is too big.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getRepoContentsByDrillDown}
  * @name get/repos/:owner/:repo/full
  * @function
  * @memberof module:routes/github~router
@@ -338,11 +348,9 @@ router.get('/repos/:owner/:repo/full', function({params: {owner, repo}}, res, ne
 	res.handlePromise(cwrcGit.getRepoContentsByDrillDown(owner, repo));
 });
 
-/* org routes */
-
-// get details for an org
 /**
  * Get the details for an organization.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForOrg}
  * @name get/orgs/:org
  * @function
  * @memberof module:routes/github~router
@@ -355,6 +363,7 @@ router.get('/orgs/:org', function({params: {org}}, res, next) {
 
 /**
  * Create a repo for a given organization.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#createOrgRepo}
  * @name post/orgs/:org/repos
  * @function
  * @memberof module:routes/github~router
@@ -376,6 +385,7 @@ router.post('/orgs/:org/repos', function({params: {org}, body}, res, next) {
 
 /**
  * Get the CWRC-Writer templates.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#getTemplates}
  * @name get/templates
  * @function
  * @memberof module:routes/github~router
@@ -391,6 +401,7 @@ router.get('/templates', function(req, res, next) {
 
 /**
  * Perform a code search.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchCode}
  * @name get/search/code
  * @function
  * @memberof module:routes/github~router
@@ -405,6 +416,7 @@ router.get('/search/code', function({query: {q, page=1, per_page=10}}, res, next
 
 /**
  * Perform a repos search.
+ * Calls {@link https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchRepos}
  * @name get/search/repositories
  * @function
  * @memberof module:routes/github~router

@@ -85,7 +85,7 @@ Get a document from GitHub.Calls [https://github.com/cwrc/CWRC-Git/blob/master/
 <a name="module_routes/github..router.post/user/repos"></a>
 
 #### router.post/user/repos(req)
-Create a repo in the authenticated user's account.
+Create a repo in the authenticated user's account.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#createRepo](https://github.com/cwrc/CWRC-Git/blob/master/API.md#createRepo)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -99,7 +99,7 @@ Create a repo in the authenticated user's account.
 <a name="module_routes/github..router.put/repos/_owner/_repo/doc"></a>
 
 #### router.put/repos/:owner/:repo/doc(req)
-Save a document.
+Save a document.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveDoc](https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveDoc)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -117,7 +117,7 @@ Save a document.
 <a name="module_routes/github..router.put/repos/_owner/_repo/pr"></a>
 
 #### router.put/repos/:owner/:repo/pr(req)
-Save a document as a pull request.
+Save a document as a pull request.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveAsPullRequest](https://github.com/cwrc/CWRC-Git/blob/master/API.md#saveAsPullRequest)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -136,7 +136,7 @@ Save a document as a pull request.
 <a name="module_routes/github..router.get/users/_username"></a>
 
 #### router.get/users/:username(req)
-Get details for a user.
+Get details for a user.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForUser](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForUser)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -148,13 +148,13 @@ Get details for a user.
 <a name="module_routes/github..router.get/users"></a>
 
 #### router.get/users()
-Get details for the authenticated user.
+Get details for the authenticated user.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForAuthenticatedUser](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForAuthenticatedUser)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 <a name="module_routes/github..router.get/user/repos"></a>
 
 #### router.get/user/repos(req)
-Get the repos for the authenticated user.
+Get the repos for the authenticated user.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getReposForAuthenticatedUser](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getReposForAuthenticatedUser)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -168,7 +168,7 @@ Get the repos for the authenticated user.
 <a name="module_routes/github..router.get/users/_username/repos"></a>
 
 #### router.get/users/:username/repos(req)
-Get the repos for a user.
+Get the repos for a user.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getReposForUser](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getReposForUser)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -182,7 +182,7 @@ Get the repos for a user.
 <a name="module_routes/github..router.get/repos/_owner/_repo/collaborators/_username/permission"></a>
 
 #### router.get/repos/:owner/:repo/collaborators/:username/permission(req)
-Get permissions for a given user and repo.
+Get permissions for a given user and repo.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getPermissionsForUser](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getPermissionsForUser)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -196,7 +196,7 @@ Get permissions for a given user and repo.
 <a name="module_routes/github..router.get/repos/_owner/_repo"></a>
 
 #### router.get/repos/:owner/:repo(req)
-Get the structure for a repo, using GitHub recursive option.
+Get the structure for a repo, using GitHub recursive option.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getRepoContents](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getRepoContents)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -209,7 +209,7 @@ Get the structure for a repo, using GitHub recursive option.
 <a name="module_routes/github..router.get/repos/_owner/_repo/full"></a>
 
 #### router.get/repos/:owner/:repo/full(req)
-Get the structure for a repo, by manually recursing through subdirectories.Intended to be used if the GitHub recursive option didn't work because the repository is too big.
+Get the structure for a repo, by manually recursing through subdirectories.Intended to be used if the GitHub recursive option didn't work because the repository is too big.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getRepoContentsByDrillDown](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getRepoContentsByDrillDown)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -222,7 +222,7 @@ Get the structure for a repo, by manually recursing through subdirectories.Inte
 <a name="module_routes/github..router.get/orgs/_org"></a>
 
 #### router.get/orgs/:org(req)
-Get the details for an organization.
+Get the details for an organization.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForOrg](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getDetailsForOrg)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -234,7 +234,7 @@ Get the details for an organization.
 <a name="module_routes/github..router.post/orgs/_org/repos"></a>
 
 #### router.post/orgs/:org/repos(req)
-Create a repo for a given organization.
+Create a repo for a given organization.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#createOrgRepo](https://github.com/cwrc/CWRC-Git/blob/master/API.md#createOrgRepo)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -249,13 +249,13 @@ Create a repo for a given organization.
 <a name="module_routes/github..router.get/templates"></a>
 
 #### router.get/templates()
-Get the CWRC-Writer templates.
+Get the CWRC-Writer templates.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#getTemplates](https://github.com/cwrc/CWRC-Git/blob/master/API.md#getTemplates)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 <a name="module_routes/github..router.get/search/code"></a>
 
 #### router.get/search/code(req)
-Perform a code search.
+Perform a code search.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchCode](https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchCode)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
@@ -269,7 +269,7 @@ Perform a code search.
 <a name="module_routes/github..router.get/search/repositories"></a>
 
 #### router.get/search/repositories(req)
-Perform a repos search.
+Perform a repos search.Calls [https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchRepos](https://github.com/cwrc/CWRC-Git/blob/master/API.md#searchRepos)
 
 **Kind**: static method of [<code>router</code>](#module_routes/github..router)  
 
