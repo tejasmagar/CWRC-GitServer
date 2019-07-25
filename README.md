@@ -37,7 +37,7 @@ CWRC-GitServer provides http endpoints for listing, creating, and updating XML d
 
 ### Demo
 
-The [CWRC-GitWriter Sandbox](https://cwrc-writer.cwrc.ca) is running an instance of [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter), which uses the NPM package published from this repository along with the code in [CWRC-WriterBase](https://github.com/cwrc/CWRC-WriterBase), [CWRC-Git](https://github.com/cwrc/CWRC-Git), and [cwrc-git-dialogs](https://github.com/cwrc/cwrc-git-dialogs). The same code is easily (for someone with modest development experience) installed on any server to run your own instance.  If you are looking to put together your own CWRC-Writer, [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter) is a good place to start.
+The [CWRC-GitWriter Sandbox](https://cwrc-writer.cwrc.ca) is running an instance of [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter), which uses the code from [CWRC-WriterBase](https://github.com/cwrc/CWRC-WriterBase) and [cwrc-git-dialogs](https://github.com/cwrc/cwrc-git-dialogs). There is a corresponding server component running this code and using the [CWRC-Git](https://github.com/cwrc/CWRC-Git) module. The same code is easily (for someone with modest development experience) installed on any server to run your own instance.  If you are looking to put together your own CWRC-Writer, [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter) is a good place to start.
 
 
 ### Setup
