@@ -22,8 +22,8 @@ describe("CWRCWriter Server Side API", function() {
         // get repo contents using Github recursive option
     describe("GET '/repos/:owner/:repo", function() {
 	    beforeEach(function () {
-		     mocks.getRepoGetTree()
-            mocks.masterBranchSHAs()
+		    mocks.getRepoGetTree()
+        mocks.masterBranchSHAs()
 	    });
 
 	    it("returns status code 200", function (done) {
@@ -36,6 +36,7 @@ describe("CWRCWriter Server Side API", function() {
 			    });
 	    });
     });
+    
     // get repo contents by 'manually' drilling down through subdirs
     describe(" GET github/repos/:owner/:repo/full", function() {
 	    beforeEach(function() {
@@ -239,25 +240,5 @@ describe("CWRCWriter Server Side API", function() {
             });
     });
   });
-
-	// get repo contents using Github recursive option
-	describe("GET '/templates/:templateName", function() {
-		beforeEach(function () {
-			templateMocks();
-			//mocks.getRepoGetTree()
-			//mocks.masterBranchSHAs()
-		});
-
-		it("returns status code 200", function (done) {
-			chai.request(server)
-				.get(`/github/templates/${fixtures.templateName}`)
-				.set('cwrc-token', fixtures.githubToken)
-				.end((err, res) => {
-					res.should.have.status(200);
-					done();
-				});
-		});
-	});
-
 
 });
