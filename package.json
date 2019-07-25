@@ -8,6 +8,7 @@
     "test": "nyc mocha spec",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "check-coverage": "nyc check-coverage",
+    "docs": "jsdoc2md routes/github.js > API.md",
     "cm": "git-cz"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "github": "^14.0.0",
     "husky": "^2.4.1",
     "js-cookie": "^2.2.0",
+    "jsdoc-to-markdown": "^5.0.0",
     "mocha": "^5.2.0",
     "nock": "^9.6.1",
     "nodemon": "^1.19.1",
