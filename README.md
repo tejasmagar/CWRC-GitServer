@@ -52,13 +52,47 @@ On the server switch into the CWRC-GitServer directory and run:
 
 `npm install` (to install the npm packages on the server)
 
-Install pm2 to run Express as a service:
+Install pm2 to run Express.js as a service:
 
 ```
 sudo npm install pm2 -g
 cd ~/cwrcserver
 pm2 start ./bin/www
 ```
+
+#### OAuth
+
+Next you'll need to [create an OAuth app](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/) so that CWRC-GitServer can access GitHub on behalf of the user.
+
+#### Config
+
+Once you have the client ID and client secret for your OAuth app, you'll need to edit the [config.js file](https://github.com/cwrc/CWRC-GitServer/blob/master/config.js). The following fields need to customized:
+
+**github_client_cors**
+
+Set to `true` if CWRC-GitServer is at a different origin than CWRC-GitWriter.
+
+**github_client_origin**
+
+The origin for CWRC-GitWriter (used if `github_client_cors` is true).
+
+**github_client_id**
+
+The client ID for your OAuth app.
+
+**github_client_secret**
+
+The client secret for your OAuth app.
+
+**github_oath_callback**
+
+The URL that GitHub should redirect to, after the user authorizes the OAuth app. It should lead to the `github/callback` route as seen [here](https://github.com/cwrc/CWRC-GitServer/blob/master/routes/github.js#L150).
+
+**github_oath_callback_redirect**
+
+The URL that CWRC-GitServer should redirect to, after handling the OAuth callback. It should lead to your installation of CWRC-GitWriter.
+
+
 <!---
 and to start automatically (from https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04):
 
@@ -103,66 +137,7 @@ restart nginx:
 `sudo service nginx restart`
 -->
 
+### CWRC-GitWriter
+
 You will also have to install the [CWRC-GitWriter](https://github.com/cwrc/CWRC-GitWriter) code on the server, as explained in its README.
 
-<!---
-### Development
-
-#### Development Setup
-
-* Fork or clone (depending on your role in the project) the repo to your local machine.
-
-* `npm install` to install the node.js dependencies 
-    
-    NOTE:  we use `npm set save-exact true` to save dependencies as exact version numbers so NPM should install exact versions when you run install
-
-* The config.js file specifies several passwords and tokens.  You'll have to set these values appropriately in your cloned repo.  To prevent git from noticing that you've changed the file (so that you don't inadvertently commit the file and push it to the public repo thereby exposing the passwords) use:
-
-`git update-index --skip-worktree config.js`
-
-* write a test (or two)for your new functionality (in 'spec' directory)
-
-* `npm test` to start mocha and automatically rerun the tests whenever you change a file
-
-* change some stuff to satisfy new test
-
-#### Development Server
-
-Start the express server in DEBUG mode:
-
-`DEBUG=cwrc-server:* npm start`
-
-#### Testing
-
-Testing uses mocha, chai, and chai-http.  
-
-`npm test` to run tests continuously during development
-`npm test:single` to run a single test.  Also generates code coverage statistics (using Istanbul)
-
-#### Coverage
-
-Code coverage statistics are also run by Travis during the travis build and published to codecov.io
-
-You can also browse the code coverage reports locally by opening:
-
-`coverage/lcov-report/index.html`
-
-in the project directory.
-
-#### Commitizen
-
-When you've got some changes to commit, please use `npm run cm` rather than `git commit`.  `npm run cm` will invoke [Commitizen](https://github.com/commitizen) to structure the commit messages using this standard: [conventional-changelog-angular](https://github.com/conventional-changelog-archived-repos/conventional-changelog-angular/blob/master/index.js).
-
-#### Travis
-
-The site is built on Travis whenever a push is made to GitHub.
-
-#### Git Hooks
-
-A pre-commit git hook is setup by ghooks to run tests and verify coverage whenever a `git commit` is made.  If the tests fail or the coverage is below the tresholds set in package.json:
-
-`"check-coverage": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100"`
-
-then the commit will fail.
-
--->
