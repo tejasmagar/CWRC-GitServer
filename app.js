@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //app.use(bodyParser({limit: '50mb'}))
 app.use(cookieParser());
 
-app.use('/github', github);
+var config = require('./config.js');
+app.use(`${config.gitserver_root_prefix}/github`, github);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
