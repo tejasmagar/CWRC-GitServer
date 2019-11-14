@@ -1,12 +1,13 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+// const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-var github = require('./routes/github');
+const config = require('./config.js');
+const github = require('./routes/github');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -14,12 +15,11 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //app.use(bodyParser({limit: '50mb'}))
 app.use(cookieParser());
 
-var config = require('./config.js');
 app.use(`${config.gitserver_root_prefix}/github`, github);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
