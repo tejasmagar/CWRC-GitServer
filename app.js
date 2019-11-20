@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const config = require('./config.js');
+
 const github = require('./routes/github');
+const schemaRouter = require('./routes/schema');
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(cookieParser());
 
 app.use(`${config.gitserver_root_prefix}/github`, github);
+app.use('/schema', schemaRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
