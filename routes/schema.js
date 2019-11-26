@@ -5,6 +5,8 @@
 
 const express = require('express');
 const debug = require('debug')('cwrc-server:server');
+// const xmlparser = require('express-xml-bodyparser');
+// const xml = require('xml');
 const rpn = require('request-promise-native')
 
 /**
@@ -40,10 +42,15 @@ router.use(httpHeaders);
  */
 const loadResource = async url => {
 
-    const res = await rpn({url, resolveWithFullResponse: true, simple: false})
-        .catch( reason =>  {
-            console.log(reason);
-            debug(reason)
+    const res = await rpn({
+            url,
+            resolveWithFullResponse: true,
+            simple: false,
+            // headers: {'Content-Type': 'text/xml'},
+        })
+        .catch( error =>  {
+            console.log(error);
+            debug(error)
             return {
                 statusCode: 500
             }
@@ -67,14 +74,12 @@ const loadResource = async url => {
  */
 router.post('/xml', async (req, res) => {
 
-    // get XML shema from the primary url
-    // if fails, try the seconday url
-    // if fails, return error 404
+    res.type('xml')
 
     if (req.body.url) {
         const schema = await loadResource(req.body.url);
         if (schema.statusCode === 200) {
-            res.send(schema);
+            res.status(200).send(schema.body);
             return;
         }
         
@@ -84,17 +89,14 @@ router.post('/xml', async (req, res) => {
     if (req.body.altUrl) {
         const schema = await loadResource(req.body.altUrl);
         if (schema.statusCode === 200) {
-            res.send(schema);
+            res.status(200).send(schema.body);
             return;
         }
         
     }
 
     //if both fail
-    res.status(204)
-        .send({
-            statusCode: 404
-        });
+    res.status(204).send();
 
 })
 
@@ -111,14 +113,12 @@ router.post('/xml', async (req, res) => {
  */
 router.post('/css', async (req, res) => {
 
-    // get CSS shema from the primary url
-    // if fails, try the seconday url
-    // if fails, return error 404
+    res.type('css')
 
     if (req.body.cssUrl) {
         const schema = await loadResource(req.body.cssUrl);
         if (schema.statusCode === 200) {
-            res.send(schema);
+            res.status(200).send(schema.body);
             return;
         }
         
@@ -127,18 +127,14 @@ router.post('/css', async (req, res) => {
     if (req.body.altCssUrl) {
         const schema = await loadResource(req.body.altCssUrl);
         if (schema.statusCode === 200) {
-            res.send(schema);
+            res.status(200).send(schema.body);
             return;
         }
         
     }
 
-    //if both  fail
-    res.status(204)
-        .send({
-            statusCode: 404
-        });
-
+    //if both fail
+    res.status(204).send();
     
 })
 
