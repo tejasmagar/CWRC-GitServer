@@ -26,7 +26,7 @@ router.use(express.json());
  */
 const httpHeaders = (request, response, next) =>  {
     response.header('Access-Control-Allow-Origin', '*'); ////true
-    response.header('Access-Control-Allow-Methods', 'POST');
+    response.header('Access-Control-Allow-Methods', 'GET');
     response.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
 }
@@ -46,7 +46,6 @@ const loadResource = async url => {
             url,
             resolveWithFullResponse: true,
             simple: false,
-            // headers: {'Content-Type': 'text/xml'},
         })
         .catch( error =>  {
             console.log(error);
@@ -63,40 +62,29 @@ const loadResource = async url => {
 
 /**
  * Get the XML Schema from a repo.
- * Calls {@ link @param url and/or @param altUrl}
- * @name post/xml
+ * Calls {@ link @param req.query.url}
+ * @name get/xml
  * @function
  * @memberof module:routes/schema
  * @param {Object} req The request
- * @param {Object} req.body The object containing the schema information
- * @param {String} req.body.url The primary xml schema uri
- * @param {String} req.query.altUrl The secundary xml schema uri
+ * @param {Object} req.query.url The xml schema uri
  */
-router.post('/xml', async (req, res) => {
+router.get('/xml', async (req, res) => {
+    
+    const resourceURL = req.query.url;
 
+    //if there is not url, send 'no content HTTP Response'
+    if (!resourceURL) res.status(204).send(); 
+    
+    const schema = await loadResource(resourceURL);
+
+    //if fetch fails, send 'No Content HTTP Response 204'
+    if (schema.statusCode !== 200) res.status(204).send();
+
+    //send xml
     res.type('xml')
-
-    if (req.body.url) {
-        const schema = await loadResource(req.body.url);
-        if (schema.statusCode === 200) {
-            res.status(200).send(schema.body);
-            return;
-        }
-        
-    }
-
-
-    if (req.body.altUrl) {
-        const schema = await loadResource(req.body.altUrl);
-        if (schema.statusCode === 200) {
-            res.status(200).send(schema.body);
-            return;
-        }
-        
-    }
-
-    //if both fail
-    res.status(204).send();
+        .status(200)
+        .send(schema.body);
 
 })
 
@@ -111,31 +99,32 @@ router.post('/xml', async (req, res) => {
  * @param {String} req.body.cssUrl The primary xml schema uri
  * @param {String} req.query.altCssUrl The secundary xml schema uri
  */
-router.post('/css', async (req, res) => {
-
-    res.type('css')
-
-    if (req.body.cssUrl) {
-        const schema = await loadResource(req.body.cssUrl);
-        if (schema.statusCode === 200) {
-            res.status(200).send(schema.body);
-            return;
-        }
-        
-    }
-
-    if (req.body.altCssUrl) {
-        const schema = await loadResource(req.body.altCssUrl);
-        if (schema.statusCode === 200) {
-            res.status(200).send(schema.body);
-            return;
-        }
-        
-    }
-
-    //if both fail
-    res.status(204).send();
+/**
+ * Get the XML Schema from a repo.
+ * Calls {@ link @param req.query.url}
+ * @name get/text
+ * @function
+ * @memberof module:routes/schema
+ * @param {Object} req The request
+ * @param {Object} req.query.url The css schema uri
+ */
+router.get('/css', async (req, res) => {
     
+    const resourceURL = req.query.url;
+
+    //if there is not url, send 'no content HTTP Response'
+    if (!resourceURL) res.status(204).send(); 
+    
+    const schema = await loadResource(resourceURL);
+
+    //if fetch fails, send 'No Content HTTP Response 204'
+    if (schema.statusCode !== 200) res.status(204).send();
+
+    //send css
+    res.type('css')
+        .status(200)
+        .send(schema.body);
+
 })
 
 
