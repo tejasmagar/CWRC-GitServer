@@ -1,10 +1,5 @@
-![Picture](http://cwrc.ca/logos/CWRC_logos_2016_versions/CWRCLogo-Horz-FullColour.png)
+# MMDA TEI
 
-# CWRC-GitServer
-
-[![Travis](https://img.shields.io/travis/cwrc/CWRC-GitServer.svg)](https://travis-ci.org/cwrc/CWRC-GitServer)
-[![Codecov](https://img.shields.io/codecov/c/github/cwrc/CWRC-GitServer.svg)](https://codecov.io/gh/cwrc/CWRC-GitServer)
-[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges) 
 
 ## Table of Contents
 
